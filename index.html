@@ -20,98 +20,357 @@
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--dark);-webkit-font-smoothing:antialiased}
     .wrap{max-width:var(--maxw);margin:0 auto;padding:28px 18px}
+
     .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px;border-radius:12px;background:linear-gradient(180deg,#ffffff 0%, #f3f9ff 100%);box-shadow:0 8px 30px rgba(11,120,209,0.06)}
     .logo{max-width:180px;margin-bottom:12px}
     h1{font-size:28px;margin:8px 0;line-height:1.06}
     .lead{max-width:820px;margin:8px auto 12px;color:var(--muted);font-size:16px}
     .price{color:var(--accent);font-size:22px;font-weight:800;margin:6px 0}
     .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:14px}
-    .btn{display:inline-block;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:800}
+    .btn{display:inline-block;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:800;cursor:pointer;border:none}
     .btn-primary{background:var(--blue);color:#fff}
     .btn-outline{border:2px solid var(--blue);color:var(--blue);background:transparent;padding:12px 18px}
+
     .trust-row{display:flex;gap:14px;align-items:center;margin-top:14px;flex-wrap:wrap;justify-content:center}
     .badge{background:#eaf4ff;color:var(--blue);padding:8px 12px;border-radius:999px;font-weight:700}
+
     .features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
     .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(11,120,209,0.03)}
     .card h4{margin:0 0 6px}
     .card p{margin:0;color:var(--muted);font-size:14px}
+
+    .social-proof{display:flex;gap:12px;align-items:center;justify-content:center;margin:8px 0}
+    .stars{color:#f5b301;font-weight:800;margin-right:8px}
+
+    .gallery{margin:28px 0;padding:18px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#f7fbff)}
+    .carousel{overflow-x:auto;overflow-y:hidden;position:relative;width:100%;-webkit-overflow-scrolling:touch;scroll-behavior:auto}
+    .carousel::-webkit-scrollbar{display:none}
+    .track{display:flex;align-items:center}
+    .slide{flex:0 0 auto;width:160px;height:230px;margin:0 10px;border-radius:8px;background-size:cover;background-position:center;box-shadow:0 6px 16px rgba(0,0,0,0.15)}
+
+    .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+    .testimonial{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(11,120,209,0.03)}
+    .avatar{width:56px;height:56px;border-radius:999px;overflow:hidden;margin-right:12px;flex-shrink:0}
+    .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .t-head{display:flex;align-items:center;margin-bottom:8px}
+
+    .faq{background:var(--blue);color:#fff;padding:20px;border-radius:12px;margin:28px 0}
+    .faq h3{margin:0 0 10px}
+    .faq ul{margin:0;padding-left:18px}
+    .faq li{margin:10px 0;font-size:15px}
+
+    .guarantee{display:flex;gap:12px;align-items:center;padding:14px;border-radius:12px;background:#fff;box-shadow:0 6px 18px rgba(11,120,209,0.03);margin:18px 0}
+
     footer{margin-top:28px;padding:24px;border-radius:8px;background:#fff;text-align:center;color:var(--muted)}
+
     #mobile-cta{display:none}
-    @media (max-width:900px){.features{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:900px){
+      .features{grid-template-columns:repeat(2,1fr)}
+      .testimonials{grid-template-columns:1fr}
+    }
     @media (max-width:600px){
+      h1{font-size:20px}
+      .features{grid-template-columns:1fr}
       #mobile-cta{display:block;position:fixed;bottom:0;left:0;width:100%;background:var(--blue);padding:14px;text-align:center;z-index:9999}
       #mobile-cta a{color:#fff;font-weight:800;text-decoration:none}
     }
+
     .btnZap{position:fixed;right:20px;bottom:90px;z-index:99999}
     .btnZap img{max-width:60px}
+    .countdown{font-weight:900;color:var(--accent);margin-left:8px}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header class="hero">
+    <header class="hero" role="banner">
       <img class="logo" src="https://i.ibb.co/DPbgSKHK/Logo-Acervo.webp" alt="Logo Acervo Infinito" />
       <h1>Acesse QUALQUER livro em segundos — <span style="color:var(--accent)"><strong>+100 milhões</strong></span> de títulos em PDF</h1>
       <div class="lead">Livros, HQs, mangás e artigos científicos. Download ilimitado e acesso imediato em qualquer dispositivo.</div>
-      <div class="price">Oferta especial: <span style="font-size:26px">R$10</span></div>
+
+      <div class="price">Oferta especial: <span style="font-size:26px">R$10</span> <small style="color:var(--muted);font-weight:600">— por tempo limitado</small></div>
 
       <div class="cta-row">
-        <!-- Botão do Checkout Pro -->
-        <button id="checkout-btn" class="btn btn-primary">QUERO MEU ACESSO AGORA — R$10</button>
+        <!-- botão principal agora é um button que inicia Checkout Pro -->
+        <button id="main-cta" class="btn btn-primary">QUERO MEU ACESSO AGORA — R$10</button>
         <a class="btn btn-outline" href="#benefits">VER MAIS BENEFÍCIOS</a>
       </div>
 
-      <div class="trust-row">
+      <div class="trust-row" aria-hidden="false">
         <div class="badge">Pagamento 100% seguro</div>
         <div class="muted">Suporte via WhatsApp • Entrega por e-mail</div>
+        <div style="margin-left:6px;display:flex;align-items:center">
+          <span class="muted">Promoção termina em</span>
+          <span id="countdown" class="countdown" aria-live="polite">05:00</span>
+        </div>
       </div>
     </header>
 
-    <!-- (restante do conteúdo mantido igual ao original) -->
+    <section id="benefits" class="features" aria-label="Vantagens">
+      <div class="card"><h4>📚 Mais de 100 milhões de títulos</h4><p>Best-sellers, raridades, manuais, artigos acadêmicos, mangás e gibis.</p></div>
+      <div class="card"><h4>⚡ Acesso imediato</h4><p>Link enviado ao seu e-mail assim que o pagamento for confirmado.</p></div>
+      <div class="card"><h4>🔁 Download ilimitado</h4><p>Baixe quantos PDFs quiser — sem taxas extras.</p></div>
+    </section>
 
-    <footer>
-      <div style="margin-top:12px">Contato: <a href="mailto:acervoinfinito.official@gmail.com">acervoinfinito.official@gmail.com</a></div>
-      <div style="margin-top:8px;font-size:13px;color:#999">© <span id="ano"></span> Acervo Infinito</div>
+    <section class="center" aria-label="Prova social">
+      <div class="social-proof"><div class="stars">⭐⭐⭐⭐⭐</div><div class="muted">Mais de <strong>12.500</strong> leitores satisfeitos</div></div>
+      <div style="margin-top:10px"><strong></strong> Um único livro custa em média R$40. Aqui você acessa mais de 100 milhões por apenas <strong>R$10</strong>.</div>
+    </section>
+
+    <section class="gallery" aria-label="Galeria de capas">
+      <h3 class="center">Qualquer livro que você imaginar</h3>
+      <p class="center muted">Se não encontrar o livro que você procura, é porque ele não existe.</p>
+
+      <div class="carousel" aria-hidden="false">
+        <div class="track" id="carousel-track">
+          <!-- Apenas uma sequência; o JS duplica para loop contínuo -->
+          <div class="slide" style="background-image:url('https://i.ibb.co/MDGGT73h/619z-AI-c-Zm-L-SL1200.jpg')" role="img" aria-label="Capa 1"></div>
+          <div class="slide" style="background-image:url('https://i.ibb.co/6JLrvDWr/715-Y9-D5z-NWL-SY522.jpg')" role="img" aria-label="Capa 2"></div>
+          <div class="slide" style="background-image:url('https://i.ibb.co/kVMgwBQG/81-Izv2-GRWo-L-SY522.jpg')" role="img" aria-label="Capa 3"></div>
+          <div class="slide" style="background-image:url('https://i.ibb.co/BVVRCQmz/91r5-G8-Rxqf-L-SY522.jpg')" role="img" aria-label="Capa 4"></div>
+          <div class="slide" style="background-image:url('https://i.ibb.co/3yjt7zvY/91-SDZ2e-Uj-L-SY522.jpg')" role="img" aria-label="Capa 5"></div>
+        </div>
+      </div>
+
+      <div class="center" style="margin-top:14px"><button class="btn btn-primary cta-secondary">GARANTIR ACESSO ILIMITADO</button></div>
+    </section>
+
+    <section style="margin-top:22px" aria-label="Testemunhos">
+      <h3 class="center">O que nossos leitores dizem</h3>
+      <div class="testimonials" role="list">
+        <div class="testimonial" role="listitem"><div class="t-head"><div class="avatar"><img src="https://i.ibb.co/RGtxhkp9/pexels-fernanda-neitzel-2155821056-34067728.jpg" alt="Mariana"></div><div><strong>Mariana</strong><div class="muted">⭐⭐⭐⭐⭐</div></div></div><p class="muted">"Achei artigos raros em minutos. Economizei semanas de trabalho."</p></div>
+        <div class="testimonial" role="listitem"><div class="t-head"><div class="avatar"><img src="https://i.ibb.co/4ZxHCXQg/pexels-cesar-o-neill-26650613-34068174.jpg" alt="Lucas"></div><div><strong>Lucas</strong><div class="muted">⭐⭐⭐⭐⭐</div></div></div><p class="muted">"Tem tudo mesmo! É surreal- Obrigado!!"</p></div>
+        <div class="testimonial" role="listitem"><div class="t-head"><div class="avatar"><img src="https://i.ibb.co/rPRZMXy/pexels-ira-dulger-647031-1452129.webp" alt="Fernanda"></div><div><strong>Fernanda</strong><div class="muted">⭐⭐⭐⭐⭐</div></div></div><p class="muted">"Rápido, simples e tem tudo mesmo, vale cada centavo."</p></div>
+      </div>
+    </section>
+
+    <section class="faq" aria-label="Perguntas frequentes">
+      <h3>Ainda com dúvidas?</h3>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <ul>
+            <li><strong>Como recebo o acesso?</strong> No seu email/whatsapp automaticamente após o pagamento.</li>
+            <li><strong>Posso ler offline?</strong> Sim, você pode baixar os livros em PDF para ler offline quando e onde quiser.</li>
+            <li><strong>Há limite de downloads?</strong> Não. Você pode baixar quantos livros desejar.</li>
+          </ul>
+        </div>
+        <div style="flex:1;min-width:260px">
+          <ul>
+            <li><strong>Inclui HQs e mangás?</strong> Sim, além de qualquer livro, o acervo também tem gibis, mangás e artigos científicos para download em PDF.</li>
+            <li><strong>O acervo é atualizado?</strong> Sim, a equipe de curadoria atualiza constantemente o acervo.</li>
+            <li><strong>Posso compartilhar acesso?</strong> Não, o acesso é pessoal e intransferível, sendo proibido compartilhar com terceiros.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="center" style="margin:24px 0">
+      <p style="color:#ff0000;font-weight:800;margin-bottom:10px">Oferta exclusiva: R$10 — válida enquanto o contador estiver ativo!</p>
+      <button class="btn btn-primary cta-secondary" style="padding:16px 24px;font-size:18px;border-radius:12px">QUERO MEU ACESSO AGORA — R$10</button>
+    </div>
+
+    <footer aria-label="Rodapé">
+      <div style="max-width:900px;margin:0 auto">
+        <div style="display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap">
+          <img src="https://i.ibb.co/DPbgSKHK/Logo-Acervo.webp" alt="Logo" style="height:48px"/>
+          <div style="text-align:left"><div style="font-weight:700">Acervo Infinito</div><div class="muted" style="font-size:13px">Nascemos da paixão por democratizar o acesso ao conhecimento.</div></div>
+        </div>
+        <div style="margin-top:12px" class="muted">Contato: <a href="mailto:acervoinfinito.official@gmail.com">acervoinfinito.official@gmail.com</a> • WhatsApp: +55 (32) 98511-7435</div>
+        <div style="margin-top:8px;font-size:13px;color:#999">© <span id="ano"></span> Acesso Ilimitado à Maior Biblioteca Digital do Mundo.</div>
+      </div>
     </footer>
   </div>
 
-  <!-- Checkout Pro -->
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <!-- CTA fixo mobile + whatsapp flutuante -->
+  <div id="mobile-cta"><a id="mobile-cta-link" style="color:#fff;font-weight:800;text-decoration:none">QUERO MEU ACESSO AGORA — R$10</a></div>
+  <div class="btnZap"><a href="https://wa.me/5532985117435?text=Olá,%20quero%20saber%20mais%20sobre%20o%20Acervo%20Infinito" target="_blank" rel="noopener"><img src="https://www.c2tiapps.com//Plugins/WhatsappIcon/imagens/whats1.png" alt="WhatsApp"/></a></div>
+
+  <!-- Scripts originais (contador, carrossel, proteção de clique) -->
   <script>
     document.getElementById('ano').innerText = new Date().getFullYear();
 
-    const mp = new MercadoPago("SUA_PUBLIC_KEY", { locale: "pt-BR" });
+    // Contador de 5 minutos
+    (function(){
+      const el = document.getElementById('countdown');
+      if(!el) return;
+      const START_SECONDS = 5 * 60;
+      let remaining = START_SECONDS;
+      function format(s){
+        const m = String(Math.floor(s / 60)).padStart(2, '0');
+        const sec = String(s % 60).padStart(2, '0');
+        return m + ':' + sec;
+      }
+      el.textContent = format(remaining);
+      let timerId = setInterval(function(){
+        remaining--;
+        if(remaining <= 0){
+          remaining = 0;
+          el.textContent = format(0);
+          clearInterval(timerId);
+          return;
+        }
+        el.textContent = format(remaining);
+      }, 1000);
+    })();
 
-    document.getElementById("checkout-btn").addEventListener("click", async () => {
-      const response = await fetch("https://api.mercadopago.com/checkout/preferences", {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer SEU_ACCESS_TOKEN",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          items: [
-            {
-              title: "Acesso à Plataforma Acervo Infinito",
-              quantity: 1,
-              currency_id: "BRL",
-              unit_price: 10.00
-            }
-          ],
-          back_urls: {
-            success: "https://seu-site.github.io/sucesso.html",
-            failure: "https://seu-site.github.io/erro.html",
-            pending: "https://seu-site.github.io/pendente.html"
-          },
-          auto_return: "approved"
-        })
+    // Protege contra múltiplos cliques no CTA principal
+    (function(){
+      const ctas = document.querySelectorAll('#main-cta, .cta-secondary');
+      ctas.forEach(cta=>{
+        cta.addEventListener('click', function(e){
+          this.style.pointerEvents = 'none';
+          const original = this.textContent;
+          this.textContent = 'Redirecionando...';
+          setTimeout(()=>{ this.style.pointerEvents = 'auto'; this.textContent = original; }, 4000);
+        });
       });
+    })();
 
-      const preference = await response.json();
+    // Carrossel infinito (mantive seu código)
+    (function(){
+      const carousel = document.querySelector('.carousel');
+      const track = document.getElementById('carousel-track');
+      if(!carousel || !track) return;
+      if(!track.dataset.cloned || track.dataset.cloned !== 'true'){
+        track.innerHTML = track.innerHTML + track.innerHTML;
+        track.dataset.cloned = 'true';
+      }
+      const SPEED_PX_PER_SEC = 40;
+      let paused = false;
+      let lastTime = performance.now();
+      function step(now){
+        const dt = now - lastTime;
+        lastTime = now;
+        if(!paused){
+          carousel.scrollLeft += (SPEED_PX_PER_SEC * dt) / 1000;
+          if(carousel.scrollLeft >= track.scrollWidth / 2){
+            carousel.scrollLeft -= track.scrollWidth / 2;
+          }
+        }
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      ['mouseenter','focusin','touchstart','pointerdown'].forEach(evt => {
+        carousel.addEventListener(evt, ()=> { paused = true; }, {passive:true});
+      });
+      ['mouseleave','blur','touchend','pointerup','touchcancel'].forEach(evt => {
+        carousel.addEventListener(evt, ()=> { paused = false; lastTime = performance.now(); }, {passive:true});
+      });
+      let isDragging = false;
+      let startX, scrollStart;
+      carousel.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        paused = true;
+        startX = e.pageX;
+        scrollStart = carousel.scrollLeft;
+        carousel.setPointerCapture(e.pointerId);
+      });
+      carousel.addEventListener('pointermove', (e) => {
+        if(!isDragging) return;
+        const dx = e.pageX - startX;
+        carousel.scrollLeft = scrollStart - dx;
+      });
+      ['pointerup','pointercancel','pointerout','pointerleave'].forEach(ev => {
+        carousel.addEventListener(ev, (e)=>{
+          isDragging = false;
+          paused = false;
+        });
+      });
+      window.addEventListener('resize', ()=> { lastTime = performance.now(); });
+    })();
+  </script>
+
+  <!-- Mercado Pago SDK e integração Checkout Pro -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script>
+    // --------- CONFIGURE AQUI (SUBSTITUA) ----------
+    const MP_PUBLIC_KEY = "SUA_PUBLIC_KEY";        // substitua pela Public Key (TEST/PROD)
+    const MP_ACCESS_TOKEN = "SEU_ACCESS_TOKEN";    // substitua pelo Access Token (TEST para teste)
+    const BACK_SUCCESS = "https://seu-usuario.github.io/seu-repositorio/sucesso.html";
+    const BACK_FAILURE = "https://seu-usuario.github.io/seu-repositorio/erro.html";
+    const BACK_PENDING = "https://seu-usuario.github.io/seu-repositorio/pendente.html";
+    const ITEM_PRICE = 10.00; // valor em BRL
+    // ------------------------------------------------
+
+    const mp = new MercadoPago(MP_PUBLIC_KEY, { locale: "pt-BR" });
+
+    // Função que cria a preferência. ATENÇÃO: criar preferência no frontend expõe o Access Token.
+    // Em produção, mova essa chamada para um backend seguro.
+    async function createPreference() {
+      try {
+        const resp = await fetch("https://api.mercadopago.com/checkout/preferences", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + MP_ACCESS_TOKEN,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            items: [
+              {
+                title: "Acesso à Plataforma Acervo Infinito",
+                quantity: 1,
+                currency_id: "BRL",
+                unit_price: ITEM_PRICE
+              }
+            ],
+            back_urls: {
+              success: BACK_SUCCESS,
+              failure: BACK_FAILURE,
+              pending: BACK_PENDING
+            },
+            auto_return: "approved",
+            statement_descriptor: "ACERVO INFINITO"
+          })
+        });
+
+        if (!resp.ok) {
+          console.error("Erro criando preferência", resp.status, await resp.text());
+          alert("Erro ao iniciar pagamento. Tente novamente mais tarde.");
+          return null;
+        }
+
+        const preference = await resp.json();
+        return preference;
+      } catch (err) {
+        console.error("Exceção ao criar preferência:", err);
+        alert("Erro ao iniciar pagamento. Tente novamente mais tarde.");
+        return null;
+      }
+    }
+
+    async function openCheckout() {
+      const pref = await createPreference();
+      if(!pref) return;
       mp.checkout({
-        preference: { id: preference.id },
-        autoOpen: true,
+        preference: { id: pref.id },
+        autoOpen: true
+      });
+    }
+
+    // Liga todos os CTAs para iniciar checkout
+    document.getElementById('main-cta').addEventListener('click', function(e){
+      e.preventDefault();
+      openCheckout();
+    });
+
+    // cta-secondary (há 2 no layout)
+    document.querySelectorAll('.cta-secondary').forEach(btn=>{
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        openCheckout();
       });
     });
+
+    // mobile CTA
+    document.getElementById('mobile-cta-link').addEventListener('click', function(e){
+      e.preventDefault();
+      openCheckout();
+    });
+
+    // Também permita abrir checkout clicando numa capa (opcional)
+    document.querySelectorAll('.slide').forEach(slide=>{
+      slide.addEventListener('click', function(){ openCheckout(); });
+    });
+
   </script>
 </body>
 </html>
