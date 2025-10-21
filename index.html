@@ -28,7 +28,7 @@
     .price{color:var(--accent);font-size:22px;font-weight:800;margin:6px 0}
     .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:14px}
     .btn{display:inline-block;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:800}
-    .btn-primary{background:var(--blue);color:#fff}
+    .btn-primary{background:var(--blue);color:#fff;border:none;cursor:pointer}
     .btn-outline{border:2px solid var(--blue);color:var(--blue);background:transparent;padding:12px 18px}
 
     .trust-row{display:flex;gap:14px;align-items:center;margin-top:14px;flex-wrap:wrap;justify-content:center}
@@ -91,7 +91,8 @@
       <div class="price">Oferta especial: <span style="font-size:26px">R$10</span> <small style="color:var(--muted);font-weight:600">— por tempo limitado</small></div>
 
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://mpago.li/15KDCau" id="main-cta">QUERO MEU ACESSO AGORA — R$10</a>
+        <!-- botão agora usa o Checkout Pro -->
+        <button id="main-cta" class="btn btn-primary">QUERO MEU ACESSO AGORA — R$10</button>
         <a class="btn btn-outline" href="#benefits">VER MAIS BENEFÍCIOS</a>
       </div>
 
@@ -131,7 +132,7 @@
         </div>
       </div>
 
-      <div class="center" style="margin-top:14px"><a class="btn btn-primary" href="https://mpago.li/15KDCau">GARANTIR ACESSO ILIMITADO</a></div>
+      <div class="center" style="margin-top:14px"><button class="btn btn-primary" id="gallery-cta">GARANTIR ACESSO ILIMITADO</button></div>
     </section>
 
     <section style="margin-top:22px" aria-label="Testemunhos">
@@ -168,7 +169,7 @@
 
     <div class="center" style="margin:24px 0">
       <p style="color:#ff0000;font-weight:800;margin-bottom:10px">Oferta exclusiva: R$10 — válida enquanto o contador estiver ativo!</p>
-      <a class="btn btn-primary" href="https://mpago.li/15KDCau" style="padding:16px 24px;font-size:18px;border-radius:12px">QUERO MEU ACESSO AGORA — R$10</a>
+      <button class="btn btn-primary" id="bottom-cta" style="padding:16px 24px;font-size:18px;border-radius:12px">QUERO MEU ACESSO AGORA — R$10</button>
     </div>
 
     <footer aria-label="Rodapé">
@@ -184,10 +185,92 @@
   </div>
 
   <!-- CTA fixo mobile + whatsapp flutuante -->
-  <div id="mobile-cta"><a href="https://mpago.li/15KDCau">QUERO MEU ACESSO AGORA — R$10</a></div>
+  <div id="mobile-cta"><a id="mobile-cta-link" href="#">QUERO MEU ACESSO AGORA — R$10</a></div>
   <div class="btnZap"><a href="https://wa.me/5532985117435?text=Olá,%20quero%20saber%20mais%20sobre%20o%20Acervo%20Infinito" target="_blank" rel="noopener"><img src="https://www.c2tiapps.com//Plugins/WhatsappIcon/imagens/whats1.png" alt="WhatsApp"/></a></div>
 
+  <!-- SDK MERCADO PAGO -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+
   <script>
+    // === CONFIGURAÇÕES (SUBSTITUA AQUI AS SUAS CHAVES DE TESTE) ===
+    // Coloque suas chaves de TEST retiradas do painel do Mercado Pago
+    const MP_PUBLIC_KEY = "APP_USR-ae72aeb0-1362-455f-adac-7ba58bb09665";         // ex: TEST-....
+    const MP_ACCESS_TOKEN = "APP_USR-2508178774735971-102020-01f81169eb3acd61cf962fec73a8d4d2-2903097708";    // ex: TEST-....
+
+    // URL de retorno no seu GitHub Pages
+    const BACK_URL_SUCCESS = "https://acervo-infinito.github.io/Official/sucesso.html";
+    const BACK_URL_FAILURE = "https://acervo-infinito.github.io/Official/erro.html";
+    const BACK_URL_PENDING = "https://acervo-infinito.github.io/Official/pendente.html";
+
+    // Link de acesso que será enviado por e-mail (já configurado no Apps Script)
+    const LINK_ACESSO = "https://pt.annas-archive.org/";
+
+    // Inicializa Mercado Pago SDK (frontend)
+    const mp = new MercadoPago(MP_PUBLIC_KEY, { locale: "pt-BR" });
+
+    // Função central que cria a preferência e abre o Checkout Pro
+    async function abrirCheckout() {
+      try {
+        const resp = await fetch("https://api.mercadopago.com/checkout/preferences", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + MP_ACCESS_TOKEN,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            items: [
+              {
+                title: "Acesso à Plataforma Acervo Infinito",
+                quantity: 1,
+                currency_id: "BRL",
+                unit_price: 10.00
+              }
+            ],
+            back_urls: {
+              success: BACK_URL_SUCCESS,
+              failure: BACK_URL_FAILURE,
+              pending: BACK_URL_PENDING
+            },
+            auto_return: "approved"
+          })
+        });
+
+        const preference = await resp.json();
+
+        if (!preference || !preference.id) {
+          console.error("Erro ao criar preferência:", preference);
+          alert("Erro ao iniciar pagamento. Verifique as credenciais de teste.");
+          return;
+        }
+
+        mp.checkout({
+          preference: { id: preference.id },
+          autoOpen: true
+        });
+      } catch (err) {
+        console.error("Erro ao abrir checkout:", err);
+        alert("Falha ao iniciar pagamento. Tente novamente.");
+      }
+    }
+
+    // conecta todos os CTAs ao abrirCheckout()
+    function bindCtas() {
+      const main = document.getElementById('main-cta');
+      const galleryCta = document.getElementById('gallery-cta');
+      const bottomCta = document.getElementById('bottom-cta');
+      const mobileLink = document.getElementById('mobile-cta-link');
+
+      [main, galleryCta, bottomCta].forEach(btn => {
+        if (btn) btn.addEventListener('click', abrirCheckout);
+      });
+      if (mobileLink) {
+        mobileLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          abrirCheckout();
+        });
+      }
+    }
+
     // Preenche ano no rodapé
     document.getElementById('ano').innerText = new Date().getFullYear();
 
@@ -220,7 +303,7 @@
       }, 1000);
     })();
 
-    // Protege contra múltiplos cliques no CTA
+    // Protege contra múltiplos cliques no CTA (mantive seu comportamento)
     (function(){
       const cta = document.getElementById('main-cta');
       if(!cta) return;
@@ -233,7 +316,7 @@
       });
     })();
 
-    // Carrossel infinito confiável em mobile/desktops
+    // Carrossel infinito confiável em mobile/desktops (mantive seu JS original)
     (function(){
       const carousel = document.querySelector('.carousel');
       const track = document.getElementById('carousel-track');
@@ -297,93 +380,12 @@
       // Se a tela redimensionar, reajusta o tempo base para evitar saltos
       window.addEventListener('resize', ()=> { lastTime = performance.now(); });
     })();
+
+    // Bind dos CTAs depois do DOM pronto
+    document.addEventListener('DOMContentLoaded', function() {
+      bindCtas();
+    });
+
   </script>
-
-  <!-- Mercado Pago Checkout Pro (TEST) -->
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
-  <script>
-    // Credenciais TEST fornecidas por você
-    const MP_PUBLIC_KEY = "APP_USR-ae72aeb0-1362-455f-adac-7ba58bb09665";
-    const MP_ACCESS_TOKEN = "APP_USR-2508178774735971-102020-01f81169eb3acd61cf962fec73a8d4d2-2903097708";
-
-    const mp = new MercadoPago(MP_PUBLIC_KEY, { locale: "pt-BR" });
-
-    async function abrirCheckout() {
-      try {
-        // cria preference via API do Mercado Pago (usar token TEST por enquanto)
-        const resp = await fetch("https://api.mercadopago.com/checkout/preferences", {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + MP_ACCESS_TOKEN,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-  items: [{
-    title: "Acesso Acervo Infinito",
-    quantity: 1,
-    currency_id: "BRL",
-    unit_price: 10.00
-  }],
-  back_urls: {
-    success: "https://acervo-infinito.github.io/Official/sucesso.html",
-    failure: "https://acervo-infinito.github.io/Official/erro.html",
-    pending: "https://acervo-infinito.github.io/Official/pendente.html"
-  },
-  notification_url: "https://eoet079we26c6kn.m.pipedream.net",
-  auto_return: "approved"
-})
-  
-  });
-
-        if(!resp.ok){
-          const txt = await resp.text();
-          console.error("Erro criando preference:", resp.status, txt);
-          alert("Erro ao iniciar pagamento. Veja console para mais detalhes.");
-          return;
-        }
-
-        const preference = await resp.json();
-        mp.checkout({ preference: { id: preference.id }, autoOpen: true });
-      } catch (err) {
-        console.error("Exceção ao abrir checkout:", err);
-        alert("Erro ao abrir checkout. Abra o console do navegador para detalhes.");
-      }
-    }
-
-    // Substitui todos os links mpago.li por chamada ao abrirCheckout para evitar redirecionamento
-    (function attachCheckoutToLinks(){
-      // Seleciona todos os elementos que apontam pro atalho mpago.li (se houver)
-      const selectors = Array.from(document.querySelectorAll('a[href*="mpago.li"], a[href*="mercadopago.com"]'));
-      selectors.forEach(a => {
-        a.addEventListener('click', function(e){
-          // se for um link para mpago.li, previne e abre o Checkout Pro
-          const href = (this.getAttribute('href') || '').toLowerCase();
-          if(href.includes('mpago.li') || href.includes('mercadopago.com/short')) {
-            e.preventDefault();
-            abrirCheckout();
-          }
-        });
-      });
-
-      // Também adiciona listener em botões que tenham a classe btn-primary (para cobrir casos)
-      document.querySelectorAll('.btn-primary').forEach(el=>{
-        el.addEventListener('click', function(e){
-          // se o elemento é um <a> e o click já foi tratado acima, ignore
-          const tag = el.tagName.toLowerCase();
-          if(tag === 'a'){
-            const href = (el.getAttribute('href')||'').toLowerCase();
-            if(!href || href === '#' || href.includes('mpago.li')) {
-              e.preventDefault();
-              abrirCheckout();
-            }
-          } else {
-            // botão ou outro elemento
-            abrirCheckout();
-          }
-        });
-      });
-    })();
-  </script>
-
 </body>
 </html>
