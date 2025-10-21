@@ -298,5 +298,92 @@
       window.addEventListener('resize', ()=> { lastTime = performance.now(); });
     })();
   </script>
+
+  <!-- Mercado Pago Checkout Pro (TEST) -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script>
+    // Credenciais TEST fornecidas por você
+    const MP_PUBLIC_KEY = "APP_USR-ae72aeb0-1362-455f-adac-7ba58bb09665";
+    const MP_ACCESS_TOKEN = "APP_USR-2508178774735971-102020-01f81169eb3acd61cf962fec73a8d4d2-2903097708";
+
+    const mp = new MercadoPago(MP_PUBLIC_KEY, { locale: "pt-BR" });
+
+    async function abrirCheckout() {
+      try {
+        // cria preference via API do Mercado Pago (usar token TEST por enquanto)
+        const resp = await fetch("https://api.mercadopago.com/checkout/preferences", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + MP_ACCESS_TOKEN,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+  items: [{
+    title: "Acesso Acervo Infinito",
+    quantity: 1,
+    currency_id: "BRL",
+    unit_price: 10.00
+  }],
+  back_urls: {
+    success: "https://acervo-infinito.github.io/Official/sucesso.html",
+    failure: "https://acervo-infinito.github.io/Official/erro.html",
+    pending: "https://acervo-infinito.github.io/Official/pendente.html"
+  },
+  notification_url: "https://eoet079we26c6kn.m.pipedream.net",
+  auto_return: "approved"
+})
+  
+  });
+
+        if(!resp.ok){
+          const txt = await resp.text();
+          console.error("Erro criando preference:", resp.status, txt);
+          alert("Erro ao iniciar pagamento. Veja console para mais detalhes.");
+          return;
+        }
+
+        const preference = await resp.json();
+        mp.checkout({ preference: { id: preference.id }, autoOpen: true });
+      } catch (err) {
+        console.error("Exceção ao abrir checkout:", err);
+        alert("Erro ao abrir checkout. Abra o console do navegador para detalhes.");
+      }
+    }
+
+    // Substitui todos os links mpago.li por chamada ao abrirCheckout para evitar redirecionamento
+    (function attachCheckoutToLinks(){
+      // Seleciona todos os elementos que apontam pro atalho mpago.li (se houver)
+      const selectors = Array.from(document.querySelectorAll('a[href*="mpago.li"], a[href*="mercadopago.com"]'));
+      selectors.forEach(a => {
+        a.addEventListener('click', function(e){
+          // se for um link para mpago.li, previne e abre o Checkout Pro
+          const href = (this.getAttribute('href') || '').toLowerCase();
+          if(href.includes('mpago.li') || href.includes('mercadopago.com/short')) {
+            e.preventDefault();
+            abrirCheckout();
+          }
+        });
+      });
+
+      // Também adiciona listener em botões que tenham a classe btn-primary (para cobrir casos)
+      document.querySelectorAll('.btn-primary').forEach(el=>{
+        el.addEventListener('click', function(e){
+          // se o elemento é um <a> e o click já foi tratado acima, ignore
+          const tag = el.tagName.toLowerCase();
+          if(tag === 'a'){
+            const href = (el.getAttribute('href')||'').toLowerCase();
+            if(!href || href === '#' || href.includes('mpago.li')) {
+              e.preventDefault();
+              abrirCheckout();
+            }
+          } else {
+            // botão ou outro elemento
+            abrirCheckout();
+          }
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
