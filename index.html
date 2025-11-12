@@ -42,7 +42,6 @@
     .social-proof{display:flex;gap:12px;align-items:center;justify-content:center;margin:8px 0}
     .stars{color:#f5b301;font-weight:800;margin-right:8px}
 
-    /* Carrossel (implementação JS para ser confiável em mobile) */
     .gallery{margin:28px 0;padding:18px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#f7fbff)}
     .carousel{overflow-x:auto;overflow-y:hidden;position:relative;width:100%;-webkit-overflow-scrolling:touch;scroll-behavior:auto}
     .carousel::-webkit-scrollbar{display:none}
@@ -59,8 +58,6 @@
     .faq h3{margin:0 0 10px}
     .faq ul{margin:0;padding-left:18px}
     .faq li{margin:10px 0;font-size:15px}
-
-    .guarantee{display:flex;gap:12px;align-items:center;padding:14px;border-radius:12px;background:#fff;box-shadow:0 6px 18px rgba(11,120,209,0.03);margin:18px 0}
 
     footer{margin-top:28px;padding:24px;border-radius:8px;background:#fff;text-align:center;color:var(--muted)}
 
@@ -79,6 +76,7 @@
     .btnZap{position:fixed;right:20px;bottom:90px;z-index:99999}
     .btnZap img{max-width:60px}
     .countdown{font-weight:900;color:var(--accent);margin-left:8px}
+    .center{text-align:center}
   </style>
 </head>
 <body>
@@ -91,7 +89,6 @@
       <div class="price">Oferta especial: <span style="font-size:26px">R$10</span> <small style="color:var(--muted);font-weight:600">— por tempo limitado</small></div>
 
       <div class="cta-row">
-        <!-- botão agora usa o Checkout Pro -->
         <button id="main-cta" class="btn btn-primary">QUERO MEU ACESSO AGORA — R$10</button>
         <a class="btn btn-outline" href="#benefits">VER MAIS BENEFÍCIOS</a>
       </div>
@@ -114,7 +111,7 @@
 
     <section class="center" aria-label="Prova social">
       <div class="social-proof"><div class="stars">⭐⭐⭐⭐⭐</div><div class="muted">Mais de <strong>12.500</strong> leitores satisfeitos</div></div>
-      <div style="margin-top:10px"><strong></strong> Um único livro custa em média R$40. Aqui você acessa mais de 100 milhões por apenas <strong>R$10</strong>.</div>
+      <div style="margin-top:10px">Um único livro custa em média R$40. Aqui você acessa mais de 100 milhões por apenas <strong>R$10</strong>.</div>
     </section>
 
     <section class="gallery" aria-label="Galeria de capas">
@@ -123,7 +120,6 @@
 
       <div class="carousel" aria-hidden="false">
         <div class="track" id="carousel-track">
-          <!-- Apenas uma sequência; o JS duplica para loop contínuo -->
           <div class="slide" style="background-image:url('https://i.ibb.co/MDGGT73h/619z-AI-c-Zm-L-SL1200.jpg')" role="img" aria-label="Capa 1"></div>
           <div class="slide" style="background-image:url('https://i.ibb.co/6JLrvDWr/715-Y9-D5z-NWL-SY522.jpg')" role="img" aria-label="Capa 2"></div>
           <div class="slide" style="background-image:url('https://i.ibb.co/kVMgwBQG/81-Izv2-GRWo-L-SY522.jpg')" role="img" aria-label="Capa 3"></div>
@@ -139,7 +135,7 @@
       <h3 class="center">O que nossos leitores dizem</h3>
       <div class="testimonials" role="list">
         <div class="testimonial" role="listitem"><div class="t-head"><div class="avatar"><img src="https://i.ibb.co/RGtxhkp9/pexels-fernanda-neitzel-2155821056-34067728.jpg" alt="Mariana"></div><div><strong>Mariana</strong><div class="muted">⭐⭐⭐⭐⭐</div></div></div><p class="muted">"Achei artigos raros em minutos. Economizei semanas de trabalho."</p></div>
-        <div class="testimonial" role="listitem"><div class="t-head"><div class="avatar"><img src="https://i.ibb.co/4ZxHCXQg/pexels-cesar-o-neill-26650613-34068174.jpg" alt="Lucas"></div><div><strong>Lucas</strong><div class="muted">⭐⭐⭐⭐⭐</div></div></div><p class="muted">"Tem tudo mesmo! É surreal- Obrigado!!"</p></div>
+        <div class="testimonial" role="listitem"><div class="t-head"><div class="avatar"><img src="https://i.ibb.co/4ZxHCXQg/pexels-cesar-o-neill-26650613-34068174.jpg" alt="Lucas"></div><div><strong>Lucas</strong><div class="muted">⭐⭐⭐⭐⭐</div></div></div><p class="muted">"Tem tudo mesmo! É surreal — obrigado!"</p></div>
         <div class="testimonial" role="listitem"><div class="t-head"><div class="avatar"><img src="https://i.ibb.co/rPRZMXy/pexels-ira-dulger-647031-1452129.webp" alt="Fernanda"></div><div><strong>Fernanda</strong><div class="muted">⭐⭐⭐⭐⭐</div></div></div><p class="muted">"Rápido, simples e tem tudo mesmo, vale cada centavo."</p></div>
       </div>
     </section>
@@ -149,11 +145,8 @@
       <div style="display:flex;gap:14px;flex-wrap:wrap">
         <div style="flex:1;min-width:260px">
           <ul>
-            <li><strong>Como recebo o acesso?</strong> No seu email/whatsapp automaticamente após o pagamento.
-</li>
-            <li><strong>Posso ler offline?</strong> Sim, você pode baixar os livros em PDF para ler offline quando e onde quiser.
-
-</li>
+            <li><strong>Como recebo o acesso?</strong> No seu e-mail/WhatsApp automaticamente após o pagamento.</li>
+            <li><strong>Posso ler offline?</strong> Sim, você pode baixar os livros em PDF para ler offline quando e onde quiser.</li>
             <li><strong>Há limite de downloads?</strong> Não. Você pode baixar quantos livros desejar.</li>
           </ul>
         </div>
@@ -161,7 +154,7 @@
           <ul>
             <li><strong>Inclui HQs e mangás?</strong> Sim, além de qualquer livro, o acervo também tem gibis, mangás e artigos científicos para download em PDF.</li>
             <li><strong>O acervo é atualizado?</strong> Sim, a equipe de curadoria atualiza constantemente o acervo.</li>
-            <li><strong>Posso compartilhar acesso?</strong> Não, o acesso é pessoal e intransferível, sendo proibido compartilhar com terceiros.</li>
+            <li><strong>Posso compartilhar acesso?</strong> Não, o acesso é pessoal e intransferível.</li>
           </ul>
         </div>
       </div>
@@ -192,54 +185,41 @@
   <script src="https://sdk.mercadopago.com/js/v2"></script>
 
   <script>
-    // === CONFIGURAÇÕES (SUBSTITUA AQUI AS SUAS CHAVES DE TESTE) ===
-    // Coloque suas chaves de TEST retiradas do painel do Mercado Pago
-    const MP_PUBLIC_KEY = "????"         // ex: TEST-....
-    const MP_ACCESS_TOKEN = "???????";    // ex: TEST-....
+    // Chave pública (pode estar no frontend)
+    const MP_PUBLIC_KEY = "APP_USR-ae72aeb0-1362-455f-adac-7ba58bb09665";
 
-    // URL de retorno no seu GitHub Pages
+    // URLs de retorno após pagamento
     const BACK_URL_SUCCESS = "https://acervo-infinito.github.io/Official/sucesso.html";
     const BACK_URL_FAILURE = "https://acervo-infinito.github.io/Official/erro.html";
     const BACK_URL_PENDING = "https://acervo-infinito.github.io/Official/pendente.html";
 
-    // Link de acesso que será enviado por e-mail (já configurado no Apps Script)
-    const LINK_ACESSO = "https://pt.annas-archive.org/";
-
     // Inicializa Mercado Pago SDK (frontend)
     const mp = new MercadoPago(MP_PUBLIC_KEY, { locale: "pt-BR" });
 
-    // Função central que cria a preferência e abre o Checkout Pro
+    // Função que chama seu backend seguro (Apps Script) para criar a preferência
     async function abrirCheckout() {
       try {
-        const resp = await fetch("https://api.mercadopago.com/checkout/preferences", {
+        const btns = document.querySelectorAll('.btn.btn-primary');
+        btns.forEach(b => b.disabled = true);
+
+        const resp = await fetch("https://script.google.com/macros/s/AKfycbw2ZJXkJyz6xSEeB4f2wYv1gIF_xrbIvhh1HVSqxcDJqIli6Br8ZM3AnFxQ968Jm5EZ/exec", {
           method: "POST",
-          headers: {
-            "Authorization": "Bearer " + MP_ACCESS_TOKEN,
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            items: [
-              {
-                title: "Acesso à Plataforma Acervo Infinito",
-                quantity: 1,
-                currency_id: "BRL",
-                unit_price: 10.00
-              }
-            ],
+            title: "Acesso à Plataforma Acervo Infinito",
+            quantity: 1,
+            unit_price: 10.00,
             back_urls: {
               success: BACK_URL_SUCCESS,
               failure: BACK_URL_FAILURE,
               pending: BACK_URL_PENDING
-            },
-            auto_return: "approved"
+            }
           })
         });
 
         const preference = await resp.json();
-
         if (!preference || !preference.id) {
-          console.error("Erro ao criar preferência:", preference);
-          alert("Erro ao iniciar pagamento. Verifique as credenciais de teste.");
+          alert("Erro ao iniciar pagamento. Tente novamente em alguns minutos.");
           return;
         }
 
@@ -248,12 +228,14 @@
           autoOpen: true
         });
       } catch (err) {
-        console.error("Erro ao abrir checkout:", err);
-        alert("Falha ao iniciar pagamento. Tente novamente.");
+        alert("Falha ao iniciar pagamento. Verifique sua conexão e tente novamente.");
+      } finally {
+        const btns = document.querySelectorAll('.btn.btn-primary');
+        btns.forEach(b => b.disabled = false);
       }
     }
 
-    // conecta todos os CTAs ao abrirCheckout()
+    // Conecta CTAs
     function bindCtas() {
       const main = document.getElementById('main-cta');
       const galleryCta = document.getElementById('gallery-cta');
@@ -271,14 +253,14 @@
       }
     }
 
-    // Preenche ano no rodapé
+    // Ano no rodapé
     document.getElementById('ano').innerText = new Date().getFullYear();
 
-    // Contador de 5 minutos que inicia em 05:00 e reinicia apenas ao recarregar a página
+    // Contador 5:00
     (function(){
       const el = document.getElementById('countdown');
       if(!el) return;
-      const START_SECONDS = 5 * 60; // 5 minutos
+      const START_SECONDS = 5 * 60;
       let remaining = START_SECONDS;
 
       function format(s){
@@ -287,28 +269,25 @@
         return m + ':' + sec;
       }
 
-      // mostra imediatamente o valor inicial
       el.textContent = format(remaining);
 
-      // atualiza a cada segundo
       let timerId = setInterval(function(){
         remaining--;
         if(remaining <= 0){
           remaining = 0;
           el.textContent = format(0);
-          clearInterval(timerId); // para quando chega a zero
+          clearInterval(timerId);
           return;
         }
         el.textContent = format(remaining);
       }, 1000);
     })();
 
-    // Protege contra múltiplos cliques no CTA (mantive seu comportamento)
+    // Feedback anti múltiplos cliques
     (function(){
       const cta = document.getElementById('main-cta');
       if(!cta) return;
-      cta.addEventListener('click', function(e){
-        // evita duplo clique e dá um feedback visual rápido
+      cta.addEventListener('click', function(){
         this.style.pointerEvents = 'none';
         const original = this.textContent;
         this.textContent = 'Redirecionando...';
@@ -316,19 +295,17 @@
       });
     })();
 
-    // Carrossel infinito confiável em mobile/desktops (mantive seu JS original)
+    // Carrossel infinito
     (function(){
       const carousel = document.querySelector('.carousel');
       const track = document.getElementById('carousel-track');
       if(!carousel || !track) return;
 
-      // Se já tiver sido clonado, não duplicar de novo
       if(!track.dataset.cloned || track.dataset.cloned !== 'true'){
-        track.innerHTML = track.innerHTML + track.innerHTML; // duplica conteúdo para loop contínuo
+        track.innerHTML = track.innerHTML + track.innerHTML;
         track.dataset.cloned = 'true';
       }
 
-      // velocidade em pixels por segundo — ajuste se quiser mais rápido/lento
       const SPEED_PX_PER_SEC = 40;
       let paused = false;
       let lastTime = performance.now();
@@ -338,7 +315,6 @@
         lastTime = now;
         if(!paused){
           carousel.scrollLeft += (SPEED_PX_PER_SEC * dt) / 1000;
-          // quando chegar na metade (porque duplicamos), volta para 0 para loop suave
           if(carousel.scrollLeft >= track.scrollWidth / 2){
             carousel.scrollLeft -= track.scrollWidth / 2;
           }
@@ -347,7 +323,6 @@
       }
       requestAnimationFrame(step);
 
-      // Pausa quando o usuário interage (hover, toque ou foco) — essencial no mobile
       ['mouseenter','focusin','touchstart','pointerdown'].forEach(evt => {
         carousel.addEventListener(evt, ()=> { paused = true; }, {passive:true});
       });
@@ -355,7 +330,6 @@
         carousel.addEventListener(evt, ()=> { paused = false; lastTime = performance.now(); }, {passive:true});
       });
 
-      // permite que o usuário arraste/role manualmente no mobile
       let isDragging = false;
       let startX, scrollStart;
       carousel.addEventListener('pointerdown', (e) => {
@@ -371,21 +345,17 @@
         carousel.scrollLeft = scrollStart - dx;
       });
       ['pointerup','pointercancel','pointerout','pointerleave'].forEach(ev => {
-        carousel.addEventListener(ev, (e)=>{
+        carousel.addEventListener(ev, ()=>{
           isDragging = false;
           paused = false;
         });
       });
 
-      // Se a tela redimensionar, reajusta o tempo base para evitar saltos
       window.addEventListener('resize', ()=> { lastTime = performance.now(); });
     })();
 
-    // Bind dos CTAs depois do DOM pronto
-    document.addEventListener('DOMContentLoaded', function() {
-      bindCtas();
-    });
-
+    // Bind CTAs
+    document.addEventListener('DOMContentLoaded', bindCtas);
   </script>
 </body>
 </html>
